@@ -74,6 +74,7 @@ model Product {
   id           String         @id @default(uuid()) @db.Char(36)
   name         String
   description  String
+  images       String[]
   price        Float
   quantity     Int            @default(0)
   checkoutItem CheckoutItem[]
@@ -82,6 +83,14 @@ model Product {
   updatedAt    DateTime       @updatedAt
 
   @@index([price, quantity, name, description])
+}
+
+model ProductCategory {
+  id        String   @id @default(uuid()) @db.Char(36)
+  name      String
+  image     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model ProductType {
