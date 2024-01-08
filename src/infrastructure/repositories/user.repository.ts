@@ -5,5 +5,11 @@ import { PrismaService } from '../../domain/services/prisma.service';
 export class UserRepository {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async findByEmail() {}
+  async findByEmail(email: string) {
+    return this.prismaService.user.findFirst({
+      where: {
+        email,
+      },
+    });
+  }
 }
