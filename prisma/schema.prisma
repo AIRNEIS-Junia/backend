@@ -11,16 +11,17 @@ datasource db {
 }
 
 model User {
-  id        String        @id @default(uuid()) @db.Char(36)
-  firstName String
-  lastName  String
-  email     String        @unique
-  password  String
-  role      UserRole      @default(client)
-  checkout  Checkout[]
-  address   UserAddress[]
-  createdAt DateTime      @default(now())
-  updatedAt DateTime      @updatedAt
+  id         String           @id @default(uuid()) @db.Char(36)
+  firstName  String
+  lastName   String
+  email      String           @unique
+  password   String
+  role       UserRole         @default(client)
+  checkout   Checkout[]
+  address    UserAddress[]
+  creditCard UserCreditCard[]
+  createdAt  DateTime         @default(now())
+  updatedAt  DateTime         @updatedAt
 
   @@index([email])
 }
@@ -28,6 +29,17 @@ model User {
 enum UserRole {
   client
   admin
+}
+
+model UserCreditCard {
+  id            String   @id @default(uuid()) @db.Char(36)
+  stancerCardId String
+  userId        String   @db.Char(36)
+  user          User     @relation(fields: [userId], references: [id])
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([stancerCardId, userId])
 }
 
 model UserAddress {
