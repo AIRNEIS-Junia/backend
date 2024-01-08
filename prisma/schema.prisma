@@ -11,21 +11,94 @@ datasource db {
 }
 
 model User {
-  id        String     @id @default(uuid()) @db.Char(36)
-  email     String     @unique
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  Checkout  Checkout[]
+  id        String        @id @default(uuid()) @db.Char(36)
+  firstName String
+  lastName  String
+  email     String        @unique
+  password  String
+  role      UserRole      @default(client)
+  checkout  Checkout[]
+  address   UserAddress[]
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
 
   @@index([email])
 }
 
+enum UserRole {
+  client
+  admin
+}
+
+model UserAddress {
+  id           String   @id @default(uuid()) @db.Char(36)
+  name         String   @default("Mon adresse")
+  streetNumber String
+  street       String
+  zipCode      String
+  city         String
+  country      String
+  userId       String   @db.Char(36)
+  user         User     @relation(fields: [userId], references: [id])
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model UserResetPassword {
+  id    String @id @default(uuid()) @db.Char(36)
+  email String @unique
+  token String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([email, token])
+}
+
+model Product {
+  id           String         @id @default(uuid()) @db.Char(36)
+  name         String
+  description  String
+  price        Float
+  quantity     Int            @default(0)
+  checkoutItem CheckoutItem[]
+  productTypes ProductType[]
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+
+  @@index([price, quantity, name, description])
+}
+
+model ProductType {
+  id        String    @id @default(uuid()) @db.Char(36)
+  name      String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  products  Product[]
+
+  @@index([name])
+}
+
 model Checkout {
   id           String         @id @default(uuid()) @db.Char(36)
-  status       String
+  status       CheckoutStatus
   userId       String         @db.Char(36)
   user         User           @relation(fields: [userId], references: [id])
-  CheckoutItem CheckoutItem[]
+  checkoutItem CheckoutItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}
+
+enum CheckoutStatus {
+  waiting
+  process
+  paymentSuccess
+  delivered
 }
 
 model CheckoutItem {
@@ -35,11 +108,9 @@ model CheckoutItem {
   product   Product  @relation(fields: [productId], references: [id])
   orderId   String   @db.Char(36)
   checkout  Checkout @relation(fields: [orderId], references: [id])
-}
 
-model Product {
-  id           String         @id @default(uuid()) @db.Char(36)
-  name         String
-  quantity     Int
-  CheckoutItem CheckoutItem[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([productId, orderId])
 }
