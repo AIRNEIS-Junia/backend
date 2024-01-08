@@ -1,0 +1,22 @@
+version: "3.9"
+name: airneis-backend
+
+services:
+  postgres:
+    image: postgres:16.1-alpine
+    volumes:
+      - postgis-data:/var/lib/postgresql
+    environment:
+      - POSTGRES_DB=airneis
+      - POSTGRES_USER=airneis
+      - POSTGRES_PASSWORD=airneis
+      - ALLOW_IP_RANGE=0.0.0.0/0
+      - RUN_AS_ROOT=true
+    ports:
+      - "5432:5432"
+    restart: on-failure
+    healthcheck:
+      test: "PGPASSWORD=airneis pg_isready -h 127.0.0.1 -U airneis -d airneis"
+
+volumes:
+  postgis-data:
