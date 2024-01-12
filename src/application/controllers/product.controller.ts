@@ -1,5 +1,5 @@
 import {ApiTags} from "@nestjs/swagger";
-import {Controller, Param, Put, Body, Post, Delete} from "@nestjs/common";
+import {Controller, Param, Put, Body, Post, Delete, Get} from "@nestjs/common";
 import { ProductService } from "../../domain/services/product.service";
 import { ProductCreateDto } from "../dto/product.dto";
 
@@ -7,6 +7,12 @@ import { ProductCreateDto } from "../dto/product.dto";
 @ApiTags('product')
 export class ProductController {
     constructor(private readonly productService: ProductService) {}
+
+    @Get('all')
+    async getAll() {
+        return this.productService.getAll();
+    }
+
     @Post('create')
     async create(@Body() body: ProductCreateDto) {
         return this.productService.create(body);

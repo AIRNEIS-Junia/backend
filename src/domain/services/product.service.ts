@@ -6,6 +6,10 @@ import {ProductCreateDto} from "../../application/dto/product.dto";
 export class ProductService {
     constructor(private readonly productRepository: ProductRepository) {}
 
+    getAll() {
+        return this.productRepository.getAll();
+    }
+
     create(body: ProductCreateDto) {
         return this.productRepository.create(body);
     }

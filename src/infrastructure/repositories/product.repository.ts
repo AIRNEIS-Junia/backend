@@ -15,6 +15,10 @@ export class ProductRepository {
         });
     }
 
+    async getAll() {
+        return this.prismaService.product.findMany();
+    }
+
     async create(data: Partial<Product>) {
         return this.prismaService.product.create({
             data: {
@@ -44,11 +48,11 @@ export class ProductRepository {
         });
     }
 
-    async getProductByCategory(categoryId: string) {
-        return this.prismaService.product.findMany({
-            where: {
-                categoryId,
-            },
-        });
-    }
+    // async getProductByCategory(categoryId: string) {
+    //     return this.prismaService.product.findMany({
+    //         where: {
+    //             categoryId,
+    //         },
+    //     });
+    // }
 }
