@@ -1,11 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../domain/services/prisma.service';
-import { User } from '@prisma/client';
+import { User, UserAddress } from '@prisma/client';
 import bcrypt from 'bcrypt';
+import _ from 'lodash';
 
 @Injectable()
 export class UserRepository {
   constructor(private readonly prismaService: PrismaService) {}
+
+  async findById(id: string) {
+    return this.prismaService.user.findUnique({
+      where: {
+        id,
+      },
+    });
+  }
 
   async findByEmail(email: string) {
     return this.prismaService.user.findFirst({
@@ -27,6 +36,81 @@ export class UserRepository {
         email: data.email,
         password: hash,
         passwordSalt: salt,
+      },
+    });
+  }
+
+  async update(data: Partial<User>) {
+    let salt: string;
+    let hash: string;
+
+    if (data.password) {
+      salt = await bcrypt.genSalt();
+      hash = await bcrypt.hash(data.password, salt);
+    }
+
+    return this.prismaService.user.update({
+      where: {
+        id: data.id,
+      },
+      data: {
+        ..._.omit(data, 'id'),
+        ...(data.password && {
+          password: hash,
+          passwordSalt: salt,
+        }),
+      },
+    });
+  }
+
+  async findAddressById(id: string) {
+    return this.prismaService.userAddress.findUnique({
+      where: {
+        id,
+      },
+    });
+  }
+
+  async findAllAddressByUserId(userId: string) {
+    return this.prismaService.userAddress.findMany({
+      where: {
+        userId,
+      },
+    });
+  }
+
+  async createAddress(data: Partial<UserAddress>) {
+    return this.prismaService.userAddress.create({
+      data: {
+        name: data.name,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        phone: data.phone,
+        streetNumber: data.streetNumber,
+        street: data.street,
+        zipCode: data.zipCode,
+        city: data.city,
+        country: data.country,
+        userId: data.userId,
+      },
+    });
+  }
+
+  async updateAddressById(data: Partial<UserAddress>) {
+    return this.prismaService.userAddress.update({
+      where: {
+        id: data.id,
+      },
+      data: {
+        ..._.omit(data, ['id']),
+      },
+    });
+  }
+
+  async deleteAddressById(id: string) {
+    return this.prismaService.userAddress.delete({
+      where: {
+        id,
       },
     });
   }

@@ -4,18 +4,18 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()
-export class JwtAtStrategy extends PassportStrategy(Strategy, 'jwt-at') {
+export class JwtRtStrategy extends PassportStrategy(Strategy, 'jwt-rt') {
   constructor(configService: ConfigService) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
-      secretOrKey: configService.get('JWT_AT_SECRET'),
+      secretOrKey: configService.get('JWT_RT_SECRET'),
     });
   }
 
   async validate(payload: any) {
     return {
-      id: payload.sub,
+      userId: payload.sub,
       firstName: payload.firstName,
       lastName: payload.lastName,
     };

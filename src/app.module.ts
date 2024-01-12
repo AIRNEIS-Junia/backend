@@ -10,6 +10,9 @@ import { JwtModule, JwtService } from '@nestjs/jwt';
 import {ProductRepository} from "./infrastructure/repositories/product.repository";
 import {ProductService} from "./domain/services/product.service";
 import {ProductController} from "./application/controllers/product.controller";
+import {UserController} from "./application/controllers/user.controller";
+import {JwtRtStrategy} from "./domain/strategies/jwt-rt.strategy";
+import {UserService} from "./domain/services/user.service";
 
 @Module({
   imports: [
@@ -28,13 +31,15 @@ import {ProductController} from "./application/controllers/product.controller";
       inject: [ConfigService],
     }),
   ],
-  controllers: [AuthController, ProductController],
+  controllers: [AuthController, UserController, ProductController],
   providers: [
     PrismaService,
     JwtAtStrategy,
+      JwtRtStrategy,
     JwtService,
     AuthService,
-    UserRepository,
+      UserService,
+      UserRepository,
     ProductRepository,
     ProductService,
   ],
