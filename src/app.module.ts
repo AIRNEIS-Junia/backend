@@ -7,6 +7,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { configurationEnvConfig } from './infrastructure/config/configurationEnv.config';
 import { JwtAtStrategy } from './domain/strategies/jwt-at.strategy';
 import { JwtModule, JwtService } from '@nestjs/jwt';
+import { UserController } from './application/controllers/user.controller';
+import { UserService } from './domain/services/user.service';
+import { JwtRtStrategy } from './domain/strategies/jwt-rt.strategy';
 
 @Module({
   imports: [
@@ -25,12 +28,14 @@ import { JwtModule, JwtService } from '@nestjs/jwt';
       inject: [ConfigService],
     }),
   ],
-  controllers: [AuthController],
+  controllers: [AuthController, UserController],
   providers: [
     PrismaService,
     JwtAtStrategy,
+    JwtRtStrategy,
     JwtService,
     AuthService,
+    UserService,
     UserRepository,
   ],
 })

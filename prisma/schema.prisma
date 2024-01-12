@@ -46,8 +46,12 @@ model UserCreditCard {
 model UserAddress {
   id           String   @id @default(uuid()) @db.Char(36)
   name         String   @default("Mon adresse")
+  firstName    String
+  lastName     String
+  phone        String
   streetNumber String
   street       String
+  additional   String?
   zipCode      String
   city         String
   country      String
@@ -108,16 +112,36 @@ model ProductType {
 }
 
 model Checkout {
-  id           String         @id @default(uuid()) @db.Char(36)
-  status       CheckoutStatus
-  userId       String         @db.Char(36)
-  user         User           @relation(fields: [userId], references: [id])
-  checkoutItem CheckoutItem[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id              String            @id @default(uuid()) @db.Char(36)
+  status          CheckoutStatus
+  userId          String            @db.Char(36)
+  user            User              @relation(fields: [userId], references: [id])
+  checkoutItem    CheckoutItem[]
+  checkoutAddress CheckoutAddress[]
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
 
   @@index([userId])
+}
+
+model CheckoutAddress {
+  id           String   @id @default(uuid()) @db.Char(36)
+  name         String
+  firstName    String
+  lastName     String
+  phone        String
+  streetNumber String
+  street       String
+  additional   String?
+  zipCode      String
+  city         String
+  country      String
+  checkoutId   String   @db.Char(36)
+  checkout     Checkout @relation(fields: [checkoutId], references: [id])
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([checkoutId])
 }
 
 enum CheckoutStatus {
