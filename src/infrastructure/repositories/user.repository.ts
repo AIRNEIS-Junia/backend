@@ -30,12 +30,12 @@ export class UserRepository {
 
     return this.prismaService.user.create({
       data: {
+        ...data,
         firstName: data.firstName,
         lastName: data.lastName,
         email: data.email,
         password: hash,
         passwordSalt: salt,
-        ...data,
       },
     });
   }
