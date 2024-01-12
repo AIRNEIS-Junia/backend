@@ -36,7 +36,7 @@ export class UserUpdateDto {
   @ApiProperty({ required: false })
   @IsString()
   @IsOptional()
-  @ValidateIf((e) => e.newPassword)
+  @ValidateIf((e) => e.newPassword.length > 0)
   @MinLength(6)
   @MaxLength(30)
   currentPassword: string;
@@ -44,7 +44,7 @@ export class UserUpdateDto {
   @ApiProperty({ required: false })
   @IsString()
   @IsOptional()
-  @ValidateIf((e) => e.currentPassword)
+  @ValidateIf((e) => e.currentPassword.length > 0)
   @MinLength(6)
   @MaxLength(30)
   newPassword: string;

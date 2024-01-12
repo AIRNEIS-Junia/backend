@@ -44,6 +44,7 @@ export class AuthService {
       _.omit(payload, ['firstName', 'lastName']),
       {
         secret: this.configService.get('JWT_RT_SECRET'),
+        expiresIn: '365d',
       },
     );
 
@@ -73,6 +74,7 @@ export class AuthService {
       _.omit(payload, ['firstName', 'lastName']),
       {
         secret: this.configService.get('JWT_RT_SECRET'),
+        expiresIn: '365d',
       },
     );
 
@@ -100,6 +102,7 @@ export class AuthService {
       _.omit(payload, ['firstName', 'lastName']),
       {
         secret: this.configService.get('JWT_RT_SECRET'),
+        expiresIn: '365d',
       },
     );
 

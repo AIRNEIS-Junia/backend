@@ -11,6 +11,7 @@ import {
   UserUpdateDto,
 } from '../../application/dto/user.dto';
 import bcrypt from 'bcrypt';
+import _ from 'lodash';
 
 @Injectable()
 export class UserService {
@@ -30,7 +31,10 @@ export class UserService {
     }
 
     await this.userRepository.update({
-      ...data,
+      ..._.omit(data, ['currentPassword', 'newPassword']),
+      ...(data.currentPassword && {
+        password: data.newPassword,
+      }),
       id: userId,
     });
 
