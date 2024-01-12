@@ -1,7 +1,7 @@
 import {ApiTags} from "@nestjs/swagger";
 import {Controller, Param, Body, Post, Delete, Get, Patch, UsePipes, ValidationPipe} from "@nestjs/common";
 import { ProductService } from "../../domain/services/product.service";
-import { ProductCreateDto } from "../dto/product.dto";
+import {ProductCategoryCreateDto, ProductCreateDto, ProductTypeCreateDto} from "../dto/product.dto";
 
 @Controller('products')
 @ApiTags('products')
@@ -37,7 +37,7 @@ export class ProductController {
 
     @Post('categories')
     @UsePipes(new ValidationPipe())
-    async createCategory(@Body() body: ProductCreateDto) {
+    async createCategory(@Body() body: ProductCategoryCreateDto) {
         return this.productService.createCategory(body);
     }
 
@@ -52,7 +52,7 @@ export class ProductController {
     }
 
     @Post('types')
-    async createType(@Body() body: ProductCreateDto) {
+    async createType(@Body() body: ProductTypeCreateDto) {
         return this.productService.createType(body);
     }
 
@@ -62,7 +62,7 @@ export class ProductController {
     }
 
     @Patch('types/:id')
-    async modifyType(@Param('id') id: string, @Body() body: ProductCreateDto) {
+    async modifyType(@Param('id') id: string, @Body() body: ProductTypeCreateDto) {
         return this.productService.modifyType(id, body);
     }
 }

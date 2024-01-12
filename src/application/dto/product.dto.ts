@@ -23,3 +23,9 @@ export class ProductCategoryCreateDto {
     @IsNotEmpty()
     description: string;
 }
+
+export class ProductTypeCreateDto {
+    @IsString()
+    @IsNotEmpty()
+    name: string;
+}

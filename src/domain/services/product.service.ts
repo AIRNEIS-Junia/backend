@@ -1,6 +1,6 @@
 import {Injectable} from "@nestjs/common";
 import {ProductRepository} from "../../infrastructure/repositories/product.repository";
-import {ProductCreateDto} from "../../application/dto/product.dto";
+import {ProductCategoryCreateDto, ProductCreateDto, ProductTypeCreateDto} from "../../application/dto/product.dto";
 
 @Injectable()
 export class ProductService {
@@ -26,7 +26,7 @@ export class ProductService {
         return this.productRepository.getAllCategories();
     }
 
-    createCategory(body: ProductCreateDto) {
+    createCategory(body: ProductCategoryCreateDto) {
         return this.productRepository.createCategory(body);
     }
 
@@ -38,7 +38,7 @@ export class ProductService {
         return this.productRepository.getAllTypes();
     }
 
-    createType(body: ProductCreateDto) {
+    createType(body: ProductTypeCreateDto) {
         return this.productRepository.createType(body);
     }
 
@@ -46,7 +46,7 @@ export class ProductService {
         return this.productRepository.deleteType(id);
     }
 
-    modifyType(id: string, body: ProductCreateDto) {
+    modifyType(id: string, body: ProductTypeCreateDto) {
         return this.productRepository.modifyType(id, body);
     }
 }
