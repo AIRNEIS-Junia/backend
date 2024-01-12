@@ -1,6 +1,6 @@
 import {Injectable} from "@nestjs/common";
 import {PrismaService} from "../../domain/services/prisma.service";
-import {Product, ProductCategory} from '@prisma/client';
+import {Product, ProductCategory, ProductType} from '@prisma/client';
 
 
 @Injectable()
@@ -79,13 +79,41 @@ export class ProductRepository {
         });
     }
 
+    async getAllTypes() {
+        return this.prismaService.productType.findMany();
+    }
 
+    async createType(data: Partial<ProductType>) {
+        return this.prismaService.productType.create({
+            data: {
+                name: data.name,
+                ...data,
+            },
+        });
+    }
 
-    // async getProductByCategory(categoryId: string) {
-    //     return this.prismaService.product.findMany({
-    //         where: {
-    //             categoryId,
-    //         },
-    //     });
-    // }
+    async deleteType(id: string) {
+        return this.prismaService.productType.delete({
+            where: {
+                id,
+            },
+        });
+    }
+
+    async modifyType(id: string, data: Partial<ProductType>) {
+        return this.prismaService.productType.update({
+            where: {
+                id,
+            },
+            data,
+        });
+    }
+
+    async findTypeByName(name: string) {
+        return this.prismaService.productType.findFirst({
+            where: {
+                name,
+            },
+        });
+    }
 }

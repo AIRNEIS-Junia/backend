@@ -34,4 +34,19 @@ export class ProductService {
         return this.productRepository.deleteCategory(id);
     }
 
+    getAllTypes() {
+        return this.productRepository.getAllTypes();
+    }
+
+    createType(body: ProductCreateDto) {
+        return this.productRepository.createType(body);
+    }
+
+    deleteType(id: string) {
+        return this.productRepository.deleteType(id);
+    }
+
+    modifyType(id: string, body: ProductCreateDto) {
+        return this.productRepository.modifyType(id, body);
+    }
 }
