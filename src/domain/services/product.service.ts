@@ -21,4 +21,17 @@ export class ProductService {
     delete(id: string) {
         return this.productRepository.delete(id);
     }
+
+    getAllCategories() {
+        return this.productRepository.getAllCategories();
+    }
+
+    createCategory(body: ProductCreateDto) {
+        return this.productRepository.createCategory(body);
+    }
+
+    deleteCategory(id: string) {
+        return this.productRepository.deleteCategory(id);
+    }
+
 }

@@ -1,6 +1,6 @@
 import {Injectable} from "@nestjs/common";
 import {PrismaService} from "../../domain/services/prisma.service";
-import { Product } from '@prisma/client';
+import {Product, ProductCategory} from '@prisma/client';
 
 
 @Injectable()
@@ -47,6 +47,39 @@ export class ProductRepository {
             },
         });
     }
+
+    async findCategoryByName(name: string) {
+        return this.prismaService.productCategory.findFirst({
+            where: {
+                name,
+            },
+        });
+    }
+
+    async getAllCategories() {
+        return this.prismaService.productCategory.findMany();
+    }
+
+    async createCategory(data: Partial<ProductCategory>) {
+        return this.prismaService.productCategory.create({
+            data: {
+                name: data.name,
+                description: data.description,
+                image: data.image,
+                ...data,
+            },
+        });
+    }
+
+    async deleteCategory(id: string) {
+        return this.prismaService.productCategory.delete({
+            where: {
+                id,
+            },
+        });
+    }
+
+
 
     // async getProductByCategory(categoryId: string) {
     //     return this.prismaService.product.findMany({

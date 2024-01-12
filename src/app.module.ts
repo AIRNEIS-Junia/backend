@@ -36,7 +36,7 @@ import {ProductController} from "./application/controllers/product.controller";
     AuthService,
     UserRepository,
     ProductRepository,
-    ProductService
+    ProductService,
   ],
 })
 export class AppModule {}

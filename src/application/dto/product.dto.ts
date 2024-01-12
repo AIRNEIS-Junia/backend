@@ -13,3 +13,13 @@ export class ProductCreateDto {
     @IsNotEmpty()
     price: number;
 }
+
+export class ProductCategoryCreateDto {
+    @IsString()
+    @IsNotEmpty()
+    name: string;
+
+    @IsString()
+    @IsNotEmpty()
+    description: string;
+}
