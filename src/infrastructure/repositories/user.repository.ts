@@ -92,7 +92,6 @@ export class UserRepository {
         city: data.city,
         country: data.country,
         userId: data.userId,
-        ...data,
       },
     });
   }

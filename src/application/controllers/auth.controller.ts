@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Req,
+  UseGuards,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { AuthService } from '../../domain/services/auth.service';
 import {
   ApiBadRequestResponse,
@@ -34,6 +43,7 @@ export class AuthController {
     description: 'Email or password wrong',
     type: CommonNotFoundResponse,
   })
+  @UsePipes(new ValidationPipe())
   async login(@Body() body: AuthLoginDto): Promise<AuthLoginResponse> {
     return this.authService.login(body);
   }
@@ -47,12 +57,14 @@ export class AuthController {
     description: 'Login error',
     type: CommonBadRequestResponse,
   })
+  @UsePipes(new ValidationPipe())
   async register(@Body() body: AuthRegisterDto): Promise<AuthRegisterResponse> {
     return this.authService.register(body);
   }
 
   @Get('verify')
   @UseGuards(AuthGuard('jwt-at'))
+  @UsePipes(new ValidationPipe())
   async verify(@Req() req: JwtReqUser) {
     console.log(req.user);
     return {

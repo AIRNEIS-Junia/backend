@@ -4,7 +4,7 @@ import { IsNumber, IsString } from 'class-validator';
 export class CommonBadRequestResponse {
   @ApiProperty()
   @IsString()
-  message: string;
+  message: string | string[];
 
   @ApiProperty()
   @IsString()
@@ -18,7 +18,7 @@ export class CommonBadRequestResponse {
 export class CommonNotFoundResponse {
   @ApiProperty()
   @IsString()
-  message: string;
+  message: string | string[];
 
   @ApiProperty()
   @IsString()

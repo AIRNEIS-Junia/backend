@@ -50,6 +50,7 @@ export class UserService {
   }
 
   async createAddress(data: UserAddressCreateDto, userId: string) {
+    console.log(userId);
     return this.userRepository.createAddress({
       ...data,
       userId,
