@@ -1,6 +1,5 @@
-import {Controller} from "@nestjs/common";
 import {ApiTags} from "@nestjs/swagger";
-import {Body, Post} from "@nestjs/common";
+import {Controller, Param, Put, Body, Post, Delete} from "@nestjs/common";
 import { ProductService } from "../../domain/services/product.service";
 import { ProductCreateDto } from "../dto/product.dto";
 
@@ -11,5 +10,15 @@ export class ProductController {
     @Post('create')
     async create(@Body() body: ProductCreateDto) {
         return this.productService.create(body);
+    }
+
+    @Put('modify/:id')
+    async modify(@Param('id') id: string, @Body() body: ProductCreateDto) {
+        return this.productService.modify(id, body);
+    }
+
+    @Delete('delete/:id')
+    async delete(@Param('id') id: string) {
+        return this.productService.delete(id);
     }
 }
