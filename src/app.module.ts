@@ -7,12 +7,12 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { configurationEnvConfig } from './infrastructure/config/configurationEnv.config';
 import { JwtAtStrategy } from './domain/strategies/jwt-at.strategy';
 import { JwtModule, JwtService } from '@nestjs/jwt';
-import {ProductRepository} from "./infrastructure/repositories/product.repository";
-import {ProductService} from "./domain/services/product.service";
-import {ProductController} from "./application/controllers/product.controller";
-import {UserController} from "./application/controllers/user.controller";
-import {JwtRtStrategy} from "./domain/strategies/jwt-rt.strategy";
-import {UserService} from "./domain/services/user.service";
+import { ProductRepository } from './infrastructure/repositories/product.repository';
+import { ProductService } from './domain/services/product.service';
+import { ProductController } from './application/controllers/product.controller';
+import { UserController } from './application/controllers/user.controller';
+import { JwtRtStrategy } from './domain/strategies/jwt-rt.strategy';
+import { UserService } from './domain/services/user.service';
 
 @Module({
   imports: [
@@ -35,11 +35,11 @@ import {UserService} from "./domain/services/user.service";
   providers: [
     PrismaService,
     JwtAtStrategy,
-      JwtRtStrategy,
+    JwtRtStrategy,
     JwtService,
     AuthService,
-      UserService,
-      UserRepository,
+    UserService,
+    UserRepository,
     ProductRepository,
     ProductService,
   ],
