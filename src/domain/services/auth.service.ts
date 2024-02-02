@@ -35,13 +35,14 @@ export class AuthService {
       firstName: findEmail.firstName,
       lastName: findEmail.lastName,
       sub: findEmail.id,
+      roles: findEmail.role,
     };
 
     const accessToken = this.jwtService.sign(payload, {
       secret: this.configService.get('JWT_AT_SECRET'),
     });
     const refreshToken = this.jwtService.sign(
-      _.omit(payload, ['firstName', 'lastName']),
+      _.omit(payload, ['firstName', 'lastName', 'roles']),
       {
         secret: this.configService.get('JWT_RT_SECRET'),
         expiresIn: '365d',
@@ -65,13 +66,14 @@ export class AuthService {
       firstName: create.firstName,
       lastName: create.lastName,
       sub: create.id,
+      roles: create.role,
     };
 
     const accessToken = this.jwtService.sign(payload, {
       secret: this.configService.get('JWT_AT_SECRET'),
     });
     const refreshToken = this.jwtService.sign(
-      _.omit(payload, ['firstName', 'lastName']),
+      _.omit(payload, ['firstName', 'lastName', 'roles']),
       {
         secret: this.configService.get('JWT_RT_SECRET'),
         expiresIn: '365d',
@@ -93,13 +95,15 @@ export class AuthService {
       firstName: findUser.firstName,
       lastName: findUser.lastName,
       sub: findUser.id,
+      roles: findUser.role,
     };
 
     const accessToken = this.jwtService.sign(payload, {
       secret: this.configService.get('JWT_AT_SECRET'),
     });
+
     const refreshToken = this.jwtService.sign(
-      _.omit(payload, ['firstName', 'lastName']),
+      _.omit(payload, ['firstName', 'lastName', 'roles']),
       {
         secret: this.configService.get('JWT_RT_SECRET'),
         expiresIn: '365d',

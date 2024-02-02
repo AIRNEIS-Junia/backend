@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  HttpCode,
   Post,
   Req,
   UseGuards,
@@ -12,6 +13,7 @@ import { AuthService } from '../../domain/services/auth.service';
 import {
   ApiBadRequestResponse,
   ApiBearerAuth,
+  ApiCreatedResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiTags,
@@ -43,20 +45,22 @@ export class AuthController {
     description: 'Email or password wrong',
     type: CommonNotFoundResponse,
   })
+  @HttpCode(200)
   @UsePipes(new ValidationPipe())
   async login(@Body() body: AuthLoginDto): Promise<AuthLoginResponse> {
     return this.authService.login(body);
   }
 
   @Post('register')
-  @ApiOkResponse({
-    description: 'Login success',
+  @ApiCreatedResponse({
+    description: 'Registration success',
     type: AuthRegisterResponse,
   })
   @ApiBadRequestResponse({
-    description: 'Login error',
+    description: 'Registration error',
     type: CommonBadRequestResponse,
   })
+  @HttpCode(201)
   @UsePipes(new ValidationPipe())
   async register(@Body() body: AuthRegisterDto): Promise<AuthRegisterResponse> {
     return this.authService.register(body);
