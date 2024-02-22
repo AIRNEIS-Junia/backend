@@ -18,6 +18,13 @@ export class ProductCreateDto {
   price: number;
 }
 
+export class ProductFindByNameDto {
+  @ApiProperty({ required: true })
+  @IsString()
+  @IsNotEmpty()
+  name: string;
+}
+
 export class ProductCategoryCreateDto {
   @ApiProperty({ required: true })
   @IsString()

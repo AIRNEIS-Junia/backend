@@ -53,4 +53,8 @@ export class ProductService {
   modifyType(id: string, body: ProductTypeCreateDto) {
     return this.productRepository.modifyType(id, body);
   }
+
+  findByName(name: string) {
+    return this.productRepository.findByName(name);
+  }
 }

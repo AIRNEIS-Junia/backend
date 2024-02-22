@@ -10,11 +10,13 @@ import {
   UsePipes,
   ValidationPipe,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { ProductService } from '../../domain/services/product.service';
 import {
   ProductCategoryCreateDto,
   ProductCreateDto,
+  ProductFindByNameDto,
   ProductTypeCreateDto,
 } from '../dto/product.dto';
 import { AuthGuard } from '@nestjs/passport';
@@ -26,6 +28,12 @@ import { Roles } from '../../infrastructure/decorators/roles.decorator';
 @ApiBearerAuth()
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
+
+  @Get('search')
+  //@UseGuards(AuthGuard('jwt-at'))
+  async findByName(@Query() query: ProductFindByNameDto) {
+    return this.productService.findByName(query.name);
+  }
 
   @Get()
   @UseGuards(AuthGuard('jwt-at'))

@@ -11,7 +11,11 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { CheckoutService } from '../../domain/services/checkout.service';
-import { CheckoutDto } from '../dto/checkout.dto';
+import {
+  CheckoutDto,
+  CheckoutAddressDto,
+  CheckoutItemDto,
+} from '../dto/checkout.dto';
 
 @Controller('checkout')
 @ApiTags('checkout')
@@ -38,5 +42,62 @@ export class CheckoutController {
   @UsePipes(new ValidationPipe())
   async modify(@Param('id') id: string, @Body() body: CheckoutDto) {
     return this.checkoutService.modify(id, body);
+  }
+
+  @Get()
+  @UsePipes(new ValidationPipe())
+  async findAll() {
+    return this.checkoutService.findAll();
+  }
+
+  @Get('address/:id')
+  @UsePipes(new ValidationPipe())
+  getCheckoutAdressById(@Param('id') id: string) {
+    return this.checkoutService.getCheckoutAdressById(id);
+  }
+
+  @Post('address')
+  @UsePipes(new ValidationPipe())
+  createCheckoutAdress(@Body() body: CheckoutAddressDto) {
+    return this.checkoutService.createCheckoutAdress(body);
+  }
+
+  @Patch('address/:id')
+  @UsePipes(new ValidationPipe())
+  updateCheckoutAdress(
+    @Param('id') id: string,
+    @Body() body: CheckoutAddressDto,
+  ) {
+    return this.checkoutService.updateCheckoutAdress(id, body);
+  }
+
+  @Delete('address/:id')
+  @UsePipes(new ValidationPipe())
+  deleteCheckoutAdress(@Param('id') id: string) {
+    return this.checkoutService.deleteCheckoutAdress(id);
+  }
+
+  @Get('items/:id')
+  @UsePipes(new ValidationPipe())
+  getCheckoutItemsById(@Param('id') id: string) {
+    return this.checkoutService.getCheckoutItemsById(id);
+  }
+
+  @Post('items')
+  @UsePipes(new ValidationPipe())
+  createCheckoutItem(@Body() body: CheckoutItemDto) {
+    return this.checkoutService.createCheckoutItem(body);
+  }
+
+  @Patch('items/:id')
+  @UsePipes(new ValidationPipe())
+  updateCheckoutItem(@Param('id') id: string, @Body() body: CheckoutItemDto) {
+    return this.checkoutService.updateCheckoutItem(id, body);
+  }
+
+  @Delete('items/:id')
+  @UsePipes(new ValidationPipe())
+  deleteCheckoutItem(@Param('id') id: string) {
+    return this.checkoutService.deleteCheckoutItem(id);
   }
 }
