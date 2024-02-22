@@ -13,6 +13,9 @@ import { ProductController } from './application/controllers/product.controller'
 import { UserController } from './application/controllers/user.controller';
 import { JwtRtStrategy } from './domain/strategies/jwt-rt.strategy';
 import { UserService } from './domain/services/user.service';
+import { ContactController } from './application/controllers/contact.controller';
+import { ContactService } from './domain/services/contact.service';
+import { ContactRepository } from './infrastructure/repositories/contact.repository';
 
 @Module({
   imports: [
@@ -31,7 +34,12 @@ import { UserService } from './domain/services/user.service';
       inject: [ConfigService],
     }),
   ],
-  controllers: [AuthController, UserController, ProductController],
+  controllers: [
+    AuthController,
+    UserController,
+    ProductController,
+    ContactController,
+  ],
   providers: [
     PrismaService,
     JwtAtStrategy,
@@ -42,6 +50,8 @@ import { UserService } from './domain/services/user.service';
     UserRepository,
     ProductRepository,
     ProductService,
+    ContactService,
+    ContactRepository,
   ],
 })
 export class AppModule {}
