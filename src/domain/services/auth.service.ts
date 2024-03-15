@@ -34,6 +34,7 @@ export class AuthService {
     const payload = {
       firstName: findEmail.firstName,
       lastName: findEmail.lastName,
+      email: findEmail.email,
       sub: findEmail.id,
       roles: findEmail.role,
     };
@@ -65,6 +66,7 @@ export class AuthService {
     const payload = {
       firstName: create.firstName,
       lastName: create.lastName,
+      email: create.email,
       sub: create.id,
       roles: create.role,
     };
@@ -94,6 +96,7 @@ export class AuthService {
     const payload = {
       firstName: findUser.firstName,
       lastName: findUser.lastName,
+      email: findUser.email,
       sub: findUser.id,
       roles: findUser.role,
     };
