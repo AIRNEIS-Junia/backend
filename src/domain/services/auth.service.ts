@@ -88,34 +88,44 @@ export class AuthService {
     };
   }
 
-  async refresh(userId: string): Promise<AuthRefreshResponse> {
-    const findUser = await this.userRepository.findById(userId);
-
-    if (!findUser) throw new NotFoundException('USER_NOT_FOUND');
-
-    const payload = {
-      firstName: findUser.firstName,
-      lastName: findUser.lastName,
-      email: findUser.email,
-      sub: findUser.id,
-      roles: findUser.role,
-    };
-
-    const accessToken = this.jwtService.sign(payload, {
-      secret: this.configService.get('JWT_AT_SECRET'),
-    });
-
-    const refreshToken = this.jwtService.sign(
-      _.omit(payload, ['firstName', 'lastName', 'roles']),
-      {
+  async refresh(rt: string): Promise<AuthRefreshResponse> {
+    try {
+      const verifyRefreshToken = await this.jwtService.verify(rt, {
         secret: this.configService.get('JWT_RT_SECRET'),
-        expiresIn: '365d',
-      },
-    );
+      });
 
-    return {
-      accessToken: accessToken,
-      refreshToken: refreshToken,
-    };
+      const findUser = await this.userRepository.findById(
+        verifyRefreshToken.sub,
+      );
+
+      if (!findUser) throw new NotFoundException('USER_NOT_FOUND');
+
+      const payload = {
+        firstName: findUser.firstName,
+        lastName: findUser.lastName,
+        email: findUser.email,
+        sub: findUser.id,
+        roles: findUser.role,
+      };
+
+      const accessToken = this.jwtService.sign(payload, {
+        secret: this.configService.get('JWT_AT_SECRET'),
+      });
+
+      const refreshToken = this.jwtService.sign(
+        _.omit(payload, ['firstName', 'lastName', 'roles']),
+        {
+          secret: this.configService.get('JWT_RT_SECRET'),
+          expiresIn: '365d',
+        },
+      );
+
+      return {
+        accessToken: accessToken,
+        refreshToken: refreshToken,
+      };
+    } catch (e) {
+      throw new BadRequestException(e?.message);
+    }
   }
 }

@@ -45,3 +45,10 @@ export class AuthRegisterDto {
   @MaxLength(30)
   password: string;
 }
+
+export class AuthRefreshTokenDto {
+  @ApiProperty({ required: true })
+  @IsString()
+  @IsNotEmpty()
+  refreshToken: string;
+}

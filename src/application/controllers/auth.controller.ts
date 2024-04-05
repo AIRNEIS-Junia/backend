@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   HttpCode,
+  Param,
   Post,
   Req,
   UseGuards,
@@ -18,7 +19,11 @@ import {
   ApiOkResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { AuthLoginDto, AuthRegisterDto } from '../dto/auth.dto';
+import {
+  AuthLoginDto,
+  AuthRefreshTokenDto,
+  AuthRegisterDto,
+} from '../dto/auth.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { JwtReqUser } from '../../infrastructure/types/jwt.type';
 import {
@@ -78,8 +83,9 @@ export class AuthController {
   }
 
   @Post('refresh')
-  @UseGuards(AuthGuard('jwt-rt'))
-  async refresh(@Req() req: JwtReqUser): Promise<AuthRefreshResponse> {
-    return this.authService.refresh(req.user.id);
+  async refresh(
+    @Body() body: AuthRefreshTokenDto,
+  ): Promise<AuthRefreshResponse> {
+    return this.authService.refresh(body.refreshToken);
   }
 }
