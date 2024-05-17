@@ -36,7 +36,6 @@ export class ProductController {
   }
 
   @Get()
-  @UseGuards(AuthGuard('jwt-at'))
   async getAll() {
     return this.productService.getAll();
   }
@@ -65,7 +64,6 @@ export class ProductController {
   }
 
   @Get('categories')
-  @UseGuards(AuthGuard('jwt-at'))
   async getAllCategory() {
     return this.productService.getAllCategories();
   }
@@ -86,7 +84,6 @@ export class ProductController {
   }
 
   @Get('types')
-  @UseGuards(AuthGuard('jwt-at'), RolesGuard)
   async getAllType() {
     return this.productService.getAllTypes();
   }
