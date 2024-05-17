@@ -40,6 +40,11 @@ export class ProductCategoryCreateDto {
   @IsString()
   @IsNotEmpty()
   description: string;
+
+  @ApiProperty({ required: true })
+  @IsString()
+  @IsNotEmpty()
+  image: string;
 }
 
 export class ProductTypeCreateDto {
