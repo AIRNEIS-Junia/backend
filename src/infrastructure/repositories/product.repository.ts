@@ -22,8 +22,9 @@ export class ProductRepository {
   async getAll() {
     return this.prismaService.product.findMany({
       include: {
-        category: true
-      }
+        category: true,
+        productTypes: true,
+      },
     });
   }
 

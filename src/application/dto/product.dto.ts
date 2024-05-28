@@ -41,6 +41,13 @@ export class ProductFindByNameDto {
   name: string;
 }
 
+export class CategoryFindByNameDto {
+  @ApiProperty({ required: true })
+  @IsString()
+  @IsNotEmpty()
+  name: string;
+}
+
 export class ProductCategoryCreateDto {
   @ApiProperty({ required: true })
   @IsString()

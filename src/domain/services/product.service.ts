@@ -30,6 +30,10 @@ export class ProductService {
     return this.productRepository.getAllCategories();
   }
 
+  getCategoryByName(name: string) {
+    return this.productRepository.findCategoryByName(name);
+  }
+
   createCategory(body: ProductCategoryCreateDto) {
     return this.productRepository.createCategory(body);
   }

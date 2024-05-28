@@ -14,10 +14,11 @@ import {
 } from '@nestjs/common';
 import { ProductService } from '../../domain/services/product.service';
 import {
+  CategoryFindByNameDto,
   ProductCategoryCreateDto,
   ProductCreateDto,
   ProductFindByNameDto,
-  ProductTypeCreateDto,
+  ProductTypeCreateDto
 } from '../dto/product.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { RolesGuard } from '../../infrastructure/guards/roles.guard';
@@ -66,6 +67,12 @@ export class ProductController {
   @Get('categories')
   async getAllCategory() {
     return this.productService.getAllCategories();
+  }
+
+  @Get('categories/:name')
+  //@UseGuards(AuthGuard('jwt-at'))
+  async findByProductCategoryName(@Query() query: CategoryFindByNameDto) {
+    return this.productService.getCategoryByName(query.name);
   }
 
   @Post('categories')
