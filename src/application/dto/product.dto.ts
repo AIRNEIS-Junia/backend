@@ -16,6 +16,11 @@ export class ProductCreateDto {
   @ApiProperty({ required: true })
   @IsString()
   @IsNotEmpty()
+  slug: string;
+
+  @ApiProperty({ required: true })
+  @IsString()
+  @IsNotEmpty()
   description: string;
 
   @ApiProperty({ required: true })
@@ -41,11 +46,18 @@ export class ProductFindByNameDto {
   name: string;
 }
 
-export class CategoryFindByNameDto {
+export class ProductFindBySlugDto {
   @ApiProperty({ required: true })
   @IsString()
   @IsNotEmpty()
-  name: string;
+  slug: string;
+}
+
+export class CategoryFindBySlugDto {
+  @ApiProperty({ required: true })
+  @IsString()
+  @IsNotEmpty()
+  slug: string;
 }
 
 export class ProductCategoryCreateDto {
@@ -53,6 +65,11 @@ export class ProductCategoryCreateDto {
   @IsString()
   @IsNotEmpty()
   name: string;
+
+  @ApiProperty({ required: true })
+  @IsString()
+  @IsNotEmpty()
+  slug: string;
 
   @ApiProperty({ required: true })
   @IsString()

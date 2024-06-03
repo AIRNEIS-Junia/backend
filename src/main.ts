@@ -18,9 +18,7 @@ async function bootstrap() {
 
     const document = SwaggerModule.createDocument(app, config);
     const theme = new SwaggerTheme('v3');
-    SwaggerModule.setup('docs', app, document, {
-      customCss: theme.getBuffer('dark'),
-    });
+    SwaggerModule.setup('docs', app, document);
 
     app.use(morgan('dev'));
   }

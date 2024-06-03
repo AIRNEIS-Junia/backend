@@ -18,6 +18,8 @@ import { AuthGuard } from '@nestjs/passport';
 import {
   UserAddressCreateDto,
   UserAddressUpdateDto,
+  UserCreditCardCreateDto,
+  UserCreditCardUpdateDto,
   UserFindByIdDto,
   UserUpdateDto,
 } from '../dto/user.dto';
@@ -79,5 +81,43 @@ export class UserController {
     @Req() req: JwtReqUser,
   ) {
     return this.userService.deleteAddress(params.id, req.user.id);
+  }
+
+  @Get('credit-card')
+  @UseGuards(AuthGuard('jwt-at'))
+  @UsePipes(new ValidationPipe())
+  async findAllCreditCard(@Req() req: JwtReqUser) {
+    return this.userService.findAllCreditCardByUserId(req.user.id);
+  }
+
+  @Post('credit-card')
+  @UseGuards(AuthGuard('jwt-at'))
+  @UsePipes(new ValidationPipe())
+  async createCreditCard(
+    @Body() body: UserCreditCardCreateDto,
+    @Req() req: JwtReqUser,
+  ) {
+    return this.userService.createCreditCard(body, req.user.id);
+  }
+
+  @Patch('credit-card/:id')
+  @UseGuards(AuthGuard('jwt-at'))
+  @UsePipes(new ValidationPipe())
+  async updateCreditCard(
+    @Param() params: UserFindByIdDto,
+    @Body() body: UserCreditCardUpdateDto,
+    @Req() req: JwtReqUser,
+  ) {
+    return this.userService.updateCreditCard(params.id, body, req.user.id);
+  }
+
+  @Delete('credit-card/:id')
+  @UseGuards(AuthGuard('jwt-at'))
+  @UsePipes(new ValidationPipe())
+  async deleteCreditCard(
+    @Param() params: UserFindByIdDto,
+    @Req() req: JwtReqUser,
+  ) {
+    return this.userService.deleteCreditCard(params.id, req.user.id);
   }
 }
