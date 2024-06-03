@@ -60,6 +60,13 @@ export class CategoryFindBySlugDto {
   slug: string;
 }
 
+export class CategoryFindByNameDto {
+  @ApiProperty({ required: true })
+  @IsString()
+  @IsNotEmpty()
+  name: string;
+}
+
 export class ProductCategoryCreateDto {
   @ApiProperty({ required: true })
   @IsString()

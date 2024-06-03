@@ -43,6 +43,10 @@ export class ProductService {
     return this.productRepository.getAllCategories();
   }
 
+  getCategoryByName(name: string) {
+    return this.productRepository.findCategoryByName(name);
+  }
+
   getCategoryBySlug(slug: string) {
     return this.productRepository.findCategoryBySlug(slug);
   }
