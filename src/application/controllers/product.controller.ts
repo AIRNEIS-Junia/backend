@@ -114,6 +114,12 @@ export class ProductController {
     return this.productService.getCategoryBySlug(slug);
   }
 
+  @Get('categories/:id')
+  //@UseGuards(AuthGuard('jwt-at'))
+  async findByProductCategoryId(@Param() query: CategoryFindByIdDto) {
+    return this.productService.findByCategoryId(query.id);
+  }
+
   @Post('categories')
   @Roles('admin')
   @UseGuards(AuthGuard('jwt-at'), RolesGuard)
