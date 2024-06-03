@@ -16,13 +16,12 @@ import { ProductService } from '../../domain/services/product.service';
 import {
   CategoryFindByNameDto,
   ProductByIdDto,
-  CategoryFindBySlugDto,
+  CategoryFindByIdDto,
   ProductCategoryCreateDto,
   ProductCreateDto,
   ProductCursorDto,
   ProductFindByNameDto,
   ProductTypeCreateDto,
-  ProductFindBySlugDto,
 } from '../dto/product.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { RolesGuard } from '../../infrastructure/guards/roles.guard';
@@ -50,6 +49,12 @@ export class ProductController {
   //@UseGuards(AuthGuard('jwt-at'))
   async findByProductSlug(@Param('slug') slug: string) {
     return this.productService.findBySlug(slug);
+  }
+
+  @Get('search/category/:id')
+  //@UseGuards(AuthGuard('jwt-at'))
+  async findByCategoryId(@Param() query: CategoryFindByIdDto) {
+    return this.productService.findByCategoryId(query.id);
   }
 
   @Get()

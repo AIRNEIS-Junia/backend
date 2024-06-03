@@ -51,6 +51,10 @@ export class ProductService {
     return this.productRepository.findCategoryBySlug(slug);
   }
 
+  findByCategoryId(id: string) {
+    return this.productRepository.findByCategoryId(id);
+  }
+
   createCategory(body: ProductCategoryCreateDto) {
     return this.productRepository.createCategory(body);
   }

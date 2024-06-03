@@ -126,6 +126,16 @@ export class ProductRepository {
     });
   }
 
+  async findByCategoryId(id: string) {
+    return this.prismaService.product.findMany({
+      where: {
+        category: {
+          id,
+        },
+      },
+    });
+  }
+
   async getAllTypes() {
     return this.prismaService.productType.findMany();
   }

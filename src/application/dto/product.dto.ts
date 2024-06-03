@@ -46,18 +46,11 @@ export class ProductFindByNameDto {
   name: string;
 }
 
-export class ProductFindBySlugDto {
+export class CategoryFindByIdDto {
   @ApiProperty({ required: true })
-  @IsString()
+  @IsUUID()
   @IsNotEmpty()
-  slug: string;
-}
-
-export class CategoryFindBySlugDto {
-  @ApiProperty({ required: true })
-  @IsString()
-  @IsNotEmpty()
-  slug: string;
+  id: string;
 }
 
 export class CategoryFindByNameDto {
