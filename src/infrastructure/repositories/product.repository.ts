@@ -1,15 +1,22 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../domain/services/prisma.service';
-import {
-  Checkout,
-  Product,
-  ProductCategory,
-  ProductType,
-} from '@prisma/client';
+import { Product, ProductCategory, ProductType } from '@prisma/client';
 
 @Injectable()
 export class ProductRepository {
   constructor(private readonly prismaService: PrismaService) {}
+
+  async findById(id: string) {
+    return this.prismaService.product.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        category: true,
+        productTypes: true,
+      },
+    });
+  }
 
   async findByName(name: string) {
     return this.prismaService.product.findFirst({
@@ -19,13 +26,26 @@ export class ProductRepository {
     });
   }
 
-  async getAll() {
+  async getAll({ cursor }: { cursor?: string }) {
     return this.prismaService.product.findMany({
       include: {
         category: true,
         productTypes: true,
       },
+      ...(cursor && {
+        cursor: {
+          id: cursor,
+        },
+      }),
+      take: 20,
+      ...(cursor && {
+        skip: 1,
+      }),
     });
+  }
+
+  async countAll() {
+    return this.prismaService.product.count();
   }
 
   async create(data: Partial<Product>) {

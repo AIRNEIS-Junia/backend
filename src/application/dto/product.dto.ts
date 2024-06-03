@@ -71,3 +71,17 @@ export class ProductTypeCreateDto {
   @IsNotEmpty()
   name: string;
 }
+
+export class ProductCursorDto {
+  @ApiProperty({ required: false })
+  @IsUUID()
+  @IsOptional()
+  cursor?: string;
+}
+
+export class ProductByIdDto {
+  @ApiProperty({ required: true })
+  @IsUUID()
+  @IsNotEmpty()
+  id: string;
+}

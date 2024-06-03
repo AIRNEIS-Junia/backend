@@ -1,4 +1,4 @@
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import {
   Controller,
   Param,
@@ -15,14 +15,22 @@ import {
 import { ProductService } from '../../domain/services/product.service';
 import {
   CategoryFindByNameDto,
+  ProductByIdDto,
   ProductCategoryCreateDto,
   ProductCreateDto,
+  ProductCursorDto,
   ProductFindByNameDto,
-  ProductTypeCreateDto
+  ProductTypeCreateDto,
 } from '../dto/product.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { RolesGuard } from '../../infrastructure/guards/roles.guard';
 import { Roles } from '../../infrastructure/decorators/roles.decorator';
+
+import {
+  ProductCategoryResponse,
+  ProductResponse,
+  ProductsPagination,
+} from '../../infrastructure/types/product.type';
 
 @Controller('products')
 @ApiTags('products')
@@ -30,15 +38,22 @@ import { Roles } from '../../infrastructure/decorators/roles.decorator';
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
-  @Get('search')
+  @Get('search/list')
   //@UseGuards(AuthGuard('jwt-at'))
   async findByName(@Query() query: ProductFindByNameDto) {
     return this.productService.findByName(query.name);
   }
 
   @Get()
-  async getAll() {
-    return this.productService.getAll();
+  @ApiOkResponse({ type: ProductsPagination })
+  async getAll(@Query() query: ProductCursorDto): Promise<ProductsPagination> {
+    return this.productService.getAll(query);
+  }
+
+  @Get('detail/:id')
+  @ApiOkResponse({ type: ProductResponse })
+  async getById(@Param() query: ProductByIdDto): Promise<ProductResponse> {
+    return this.productService.get(query.id);
   }
 
   @Post()
@@ -65,13 +80,18 @@ export class ProductController {
   }
 
   @Get('categories')
-  async getAllCategory() {
+  @ApiOkResponse({ type: [ProductCategoryResponse] })
+  async getAllCategory(): Promise<ProductCategoryResponse[]> {
+    console.log('làà');
     return this.productService.getAllCategories();
   }
 
-  @Get('categories/:name')
+  @Get('category')
   //@UseGuards(AuthGuard('jwt-at'))
-  async findByProductCategoryName(@Query() query: CategoryFindByNameDto) {
+  @ApiOkResponse({ type: ProductCategoryResponse })
+  async findByProductCategoryName(
+    @Query() query: CategoryFindByNameDto,
+  ): Promise<ProductCategoryResponse> {
     return this.productService.getCategoryByName(query.name);
   }
 

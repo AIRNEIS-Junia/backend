@@ -13,6 +13,7 @@ async function bootstrap() {
       .setTitle('Airneis')
       .setDescription('Airneis API description')
       .setVersion('0.0.1')
+      .addServer('http://localhost:3001')
       .build();
 
     const document = SwaggerModule.createDocument(app, config);

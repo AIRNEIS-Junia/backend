@@ -3,6 +3,7 @@ import { ProductRepository } from '../../infrastructure/repositories/product.rep
 import {
   ProductCategoryCreateDto,
   ProductCreateDto,
+  ProductCursorDto,
   ProductTypeCreateDto,
 } from '../../application/dto/product.dto';
 
@@ -10,8 +11,20 @@ import {
 export class ProductService {
   constructor(private readonly productRepository: ProductRepository) {}
 
-  getAll() {
-    return this.productRepository.getAll();
+  async get(id: string) {
+    return this.productRepository.findById(id);
+  }
+
+  async getAll(data: ProductCursorDto) {
+    const results = await this.productRepository.getAll({
+      cursor: data.cursor,
+    });
+    const total = await this.productRepository.countAll();
+
+    return {
+      total,
+      results,
+    };
   }
 
   create(body: ProductCreateDto) {
