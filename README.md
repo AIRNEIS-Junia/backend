@@ -28,8 +28,23 @@
 
 ## Installation
 
+### Run :
+
 ```bash
 $ npm install
+```
+
+### IP :
+In .env file, replace in `DATABASE_URL` field `localhost` by your local IP address. <br>
+You can find it by running `ipconfig` as IPv4 address
+
+
+> ***_On Windows_*** : <br>
+> Run `npm install -g win-node-env` to set up your `NODE_ENV` environment variable or manually add it
+
+## Running Docker
+```bash 
+docker-compose up -d
 ```
 
 ## Running the app
@@ -45,6 +60,16 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+## At first launch
+Initialize the database by running :
+```bash
+$ npx prisma generate && npx prisma db push
+````
+or
+```bash
+$ npm run db
+```
+
 ## Test
 
 ```bash
@@ -56,6 +81,12 @@ $ npm run test:e2e
 
 # test coverage
 $ npm run test:cov
+```
+
+## Edit DB Manually
+
+```bash
+$ npx prisma studio
 ```
 
 ## Support
