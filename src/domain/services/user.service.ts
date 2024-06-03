@@ -8,6 +8,8 @@ import { UserRepository } from '../../infrastructure/repositories/user.repositor
 import {
   UserAddressCreateDto,
   UserAddressUpdateDto,
+  UserCreditCardCreateDto,
+  UserCreditCardUpdateDto,
   UserUpdateDto,
 } from '../../application/dto/user.dto';
 import bcrypt from 'bcrypt';
@@ -84,6 +86,57 @@ export class UserService {
     return {
       status: 'success',
       message: 'address deleted',
+    };
+  }
+
+  async findAllCreditCardByUserId(userId: string) {
+    const creditCard = await this.userRepository.findAllCreditCardByUserId(
+      userId,
+    );
+
+    return {
+      total: creditCard.length,
+      results: creditCard,
+    };
+  }
+
+  async createCreditCard(data: UserCreditCardCreateDto, userId: string) {
+    console.log(userId);
+    return this.userRepository.createCreditCard({
+      ...data,
+      userId,
+    });
+  }
+
+  async updateCreditCard(
+    id: string,
+    data: UserCreditCardUpdateDto,
+    userId: string,
+  ) {
+    const findCardNumber = await this.userRepository.findCreditCardById(id);
+
+    if (!findCardNumber)
+      throw new NotFoundException('USER_CREDIT_CARD_NOT_FOUND');
+
+    if (findCardNumber.userId !== userId) throw new ForbiddenException();
+
+    return this.userRepository.updateCreditCardById({
+      ...data,
+      id,
+    });
+  }
+
+  async deleteCreditCard(id: string, userId: string) {
+    const findCreditCard = await this.userRepository.findCreditCardById(id);
+
+    if (!findCreditCard)
+      throw new NotFoundException('USER_CREDIT_CARD_NOT_FOUND');
+
+    if (findCreditCard.userId !== userId) throw new ForbiddenException();
+
+    return {
+      status: 'success',
+      message: 'credit card deleted',
     };
   }
 }

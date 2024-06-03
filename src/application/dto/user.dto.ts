@@ -1,14 +1,16 @@
 import {
+  IsDate,
   IsEmail,
-  IsNotEmpty,
+  IsNotEmpty, IsNumber,
   IsOptional,
   IsString,
   IsUUID,
   MaxLength,
   MinLength,
-  ValidateIf,
-} from 'class-validator';
+  ValidateIf
+} from "class-validator";
 import { ApiProperty } from '@nestjs/swagger';
+import { Type } from "class-transformer";
 
 export class UserFindByIdDto {
   @ApiProperty({ required: true })
@@ -102,6 +104,52 @@ export class UserAddressCreateDto {
   @IsString()
   @IsNotEmpty()
   country: string;
+}
+
+export class UserCreditCardCreateDto {
+  @ApiProperty({ required: true })
+  @IsString()
+  @IsNotEmpty()
+  cardNumber: string;
+
+  @ApiProperty({ required: true })
+  @IsString()
+  @IsNotEmpty()
+  cardHolderName: string;
+
+  @ApiProperty({ required: true })
+  @IsDate()
+  @Type(() => Date)
+  @IsNotEmpty()
+  expiryDate: Date;
+
+  @ApiProperty({ required: true })
+  @IsNumber()
+  @IsNotEmpty()
+  cvv: number;
+}
+
+export class UserCreditCardUpdateDto {
+  @ApiProperty({ required: false })
+  @IsNumber()
+  @IsOptional()
+  cardNumber: string;
+
+  @ApiProperty({ required: false })
+  @IsString()
+  @IsOptional()
+  cardHolder: string;
+
+  @ApiProperty({ required: false })
+  @IsDate()
+  @Type(() => Date)
+  @IsOptional()
+  expiryDate: Date;
+
+  @ApiProperty({ required: false })
+  @IsNumber()
+  @IsOptional()
+  cvv: number;
 }
 
 export class UserAddressUpdateDto {

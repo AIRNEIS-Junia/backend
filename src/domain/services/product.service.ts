@@ -30,8 +30,8 @@ export class ProductService {
     return this.productRepository.getAllCategories();
   }
 
-  getCategoryByName(name: string) {
-    return this.productRepository.findCategoryByName(name);
+  getCategoryBySlug(slug: string) {
+    return this.productRepository.findCategoryBySlug(slug);
   }
 
   createCategory(body: ProductCategoryCreateDto) {
@@ -60,5 +60,9 @@ export class ProductService {
 
   findByName(name: string) {
     return this.productRepository.findByName(name);
+  }
+
+  findBySlug(slug: string) {
+    return this.productRepository.findBySlug(slug);
   }
 }

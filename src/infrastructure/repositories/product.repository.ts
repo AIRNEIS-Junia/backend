@@ -19,6 +19,14 @@ export class ProductRepository {
     });
   }
 
+  async findBySlug(slug: string) {
+    return this.prismaService.product.findFirst({
+      where: {
+        slug,
+      },
+    });
+  }
+
   async getAll() {
     return this.prismaService.product.findMany({
       include: {
@@ -31,6 +39,7 @@ export class ProductRepository {
   async create(data: Partial<Product>) {
     return this.prismaService.product.create({
       data: {
+        slug: data.slug,
         name: data.name,
         description: data.description,
         price: data.price,
@@ -57,10 +66,10 @@ export class ProductRepository {
     });
   }
 
-  async findCategoryByName(name: string) {
+  async findCategoryBySlug(slug: string) {
     return this.prismaService.productCategory.findFirst({
       where: {
-        name,
+        slug,
       },
     });
   }
@@ -72,6 +81,7 @@ export class ProductRepository {
   async createCategory(data: Partial<ProductCategory>) {
     return this.prismaService.productCategory.create({
       data: {
+        slug: data.slug,
         name: data.name,
         description: data.description,
         image: data.image,

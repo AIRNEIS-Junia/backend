@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../domain/services/prisma.service';
-import { User, UserAddress } from '@prisma/client';
+import { User, UserAddress, UserCreditCard } from '@prisma/client';
 import bcrypt from 'bcrypt';
 import _ from 'lodash';
 
@@ -109,6 +109,55 @@ export class UserRepository {
 
   async deleteAddressById(id: string) {
     return this.prismaService.userAddress.delete({
+      where: {
+        id,
+      },
+    });
+  }
+
+  // credit card
+
+  async findCreditCardById(id: string) {
+    return this.prismaService.userCreditCard.findUnique({
+      where: {
+        id,
+      },
+    });
+  }
+
+  async findAllCreditCardByUserId(userId: string) {
+    return this.prismaService.userCreditCard.findMany({
+      where: {
+        userId,
+      },
+    });
+  }
+
+  async createCreditCard(data: Partial<UserCreditCard>) {
+    return this.prismaService.userCreditCard.create({
+      data: {
+        cardHolderName: data.cardHolderName,
+        cardNumber: data.cardNumber,
+        expiryDate: data.expiryDate,
+        cvv: data.cvv,
+        userId: data.userId,
+      },
+    });
+  }
+
+  async updateCreditCardById(data: Partial<UserAddress>) {
+    return this.prismaService.userAddress.update({
+      where: {
+        id: data.id,
+      },
+      data: {
+        ..._.omit(data, ['id']),
+      },
+    });
+  }
+
+  async deleteCreditCardById(id: string) {
+    return this.prismaService.userCreditCard.delete({
       where: {
         id,
       },

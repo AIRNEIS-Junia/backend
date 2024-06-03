@@ -14,12 +14,12 @@ import {
 } from '@nestjs/common';
 import { ProductService } from '../../domain/services/product.service';
 import {
-  CategoryFindByNameDto,
+  CategoryFindBySlugDto,
   ProductCategoryCreateDto,
-  ProductCreateDto,
-  ProductFindByNameDto,
+  ProductCreateDto, ProductFindByNameDto,
+  ProductFindBySlugDto,
   ProductTypeCreateDto
-} from '../dto/product.dto';
+} from "../dto/product.dto";
 import { AuthGuard } from '@nestjs/passport';
 import { RolesGuard } from '../../infrastructure/guards/roles.guard';
 import { Roles } from '../../infrastructure/decorators/roles.decorator';
@@ -34,6 +34,12 @@ export class ProductController {
   //@UseGuards(AuthGuard('jwt-at'))
   async findByName(@Query() query: ProductFindByNameDto) {
     return this.productService.findByName(query.name);
+  }
+
+  @Get('search/slug/:slug')
+  //@UseGuards(AuthGuard('jwt-at'))
+  async findByProductSlug(@Param('slug') slug: string) {
+    return this.productService.findBySlug(slug);
   }
 
   @Get()
@@ -69,10 +75,10 @@ export class ProductController {
     return this.productService.getAllCategories();
   }
 
-  @Get('categories/:name')
+  @Get('categories/:slug')
   //@UseGuards(AuthGuard('jwt-at'))
-  async findByProductCategoryName(@Query() query: CategoryFindByNameDto) {
-    return this.productService.getCategoryByName(query.name);
+  async findByProductCategorySlug(@Param('slug') slug: string) {
+    return this.productService.getCategoryBySlug(slug);
   }
 
   @Post('categories')

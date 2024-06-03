@@ -33,14 +33,17 @@ enum UserRole {
 }
 
 model UserCreditCard {
-  id            String   @id @default(uuid()) @db.Char(36)
-  stancerCardId String
-  userId        String   @db.Char(36)
-  user          User     @relation(fields: [userId], references: [id])
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id             String   @id @default(uuid()) @db.Char(36)
+  userId         String   @db.Char(36)
+  user           User     @relation(fields: [userId], references: [id])
+  cardNumber     String   @db.VarChar(255)
+  cardHolderName String   @db.VarChar(255)
+  expiryDate     DateTime @db.Date
+  cvv            Int
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 
-  @@index([stancerCardId, userId])
+  @@index([cardHolderName, userId])
 }
 
 model UserAddress {
@@ -78,6 +81,7 @@ model Product {
   id           String          @id @default(uuid()) @db.Char(36)
   name         String
   description  String
+  slug         String
   images       String[]
   price        Float
   quantity     Int             @default(0)
@@ -95,6 +99,7 @@ model ProductCategory {
   id          String    @id @default(uuid()) @db.Char(36)
   name        String
   description String
+  slug        String
   image       String
   products    Product[]
   createdAt   DateTime  @default(now())
