@@ -90,6 +90,7 @@ export class UserService {
   }
 
   async findAllCreditCardByUserId(userId: string) {
+    console.log('userId', userId);
     const creditCard = await this.userRepository.findAllCreditCardByUserId(
       userId,
     );

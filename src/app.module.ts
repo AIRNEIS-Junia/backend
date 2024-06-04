@@ -16,6 +16,8 @@ import { UserService } from './domain/services/user.service';
 import { ContactController } from './application/controllers/contact.controller';
 import { ContactService } from './domain/services/contact.service';
 import { ContactRepository } from './infrastructure/repositories/contact.repository';
+import { OrdersController } from './application/controllers/orders.controller';
+import { OrdersService } from './domain/services/orders.service';
 
 @Module({
   imports: [
@@ -39,6 +41,7 @@ import { ContactRepository } from './infrastructure/repositories/contact.reposit
     UserController,
     ProductController,
     ContactController,
+    OrdersController,
   ],
   providers: [
     PrismaService,
@@ -52,6 +55,7 @@ import { ContactRepository } from './infrastructure/repositories/contact.reposit
     ProductService,
     ContactService,
     ContactRepository,
+    OrdersService,
   ],
 })
 export class AppModule {}

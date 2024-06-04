@@ -128,7 +128,7 @@ export class UserRepository {
   async findAllCreditCardByUserId(userId: string) {
     return this.prismaService.userCreditCard.findMany({
       where: {
-        userId,
+        userId: userId,
       },
     });
   }
