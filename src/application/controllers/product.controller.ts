@@ -95,7 +95,6 @@ export class ProductController {
   @Get('categories')
   @ApiOkResponse({ type: [ProductCategoryResponse] })
   async getAllCategory(): Promise<ProductCategoryResponse[]> {
-    console.log('làà');
     return this.productService.getAllCategories();
   }
 
