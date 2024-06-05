@@ -89,7 +89,7 @@ export class UserService {
     };
   }
 
-  async findAllUsers(@Res() res: Response) {
+  async findAllUsers() {
     return this.userRepository.findAllUsers();
   }
 }

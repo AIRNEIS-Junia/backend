@@ -46,7 +46,6 @@ export class ProductController {
   @UseGuards(AuthGuard('jwt-at'))
   async getAll(@Res() res: Response) {
     const products = await this.productService.getAll();
-
     const total = products.length;
 
     res.set('Content-Range', `products 0-10/${total}`);

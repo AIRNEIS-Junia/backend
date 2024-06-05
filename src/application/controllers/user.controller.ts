@@ -40,15 +40,14 @@ export class UserController {
   @Get('all')
   @UseGuards(AuthGuard('jwt-at'))
   async findAll(@Res() res: Response) {
-    const users = await this.userService.findAllUsers(res);
+    const users = await this.userService.findAllUsers();
     const total = users.length;
 
-    res.set('Content-Range', `users 0-10/${total}`);
     res.set('Content-Range', `users 0-10/${total}`);
     res.json(users);
   }
 
-  @Patch()
+  @Patch(':id')
   @UseGuards(AuthGuard('jwt-at'))
   @UsePipes(new ValidationPipe())
   async update(@Body() body: UserUpdateDto, @Req() req: JwtReqUser) {
