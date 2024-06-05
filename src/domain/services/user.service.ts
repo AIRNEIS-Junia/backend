@@ -2,8 +2,8 @@ import {
   BadRequestException,
   ForbiddenException,
   Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+  NotFoundException, Res
+} from "@nestjs/common";
 import { UserRepository } from '../../infrastructure/repositories/user.repository';
 import {
   UserAddressCreateDto,
@@ -12,6 +12,7 @@ import {
 } from '../../application/dto/user.dto';
 import bcrypt from 'bcrypt';
 import _ from 'lodash';
+import { Response } from "express";
 
 @Injectable()
 export class UserService {
@@ -43,6 +44,7 @@ export class UserService {
       message: 'user updated',
     };
   }
+
 
   async findAllAddressByUserId(userId: string) {
     const address = await this.userRepository.findAllAddressByUserId(userId);
@@ -85,5 +87,9 @@ export class UserService {
       status: 'success',
       message: 'address deleted',
     };
+  }
+
+  async findAllUsers(@Res() res: Response) {
+    return this.userRepository.findAllUsers();
   }
 }

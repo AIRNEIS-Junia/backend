@@ -114,4 +114,8 @@ export class UserRepository {
       },
     });
   }
+
+  async findAllUsers() {
+    return this.prismaService.user.findMany();
+  }
 }
