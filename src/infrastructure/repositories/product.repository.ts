@@ -120,4 +120,20 @@ export class ProductRepository {
       },
     });
   }
+
+  getCategoryById(id: string) {
+    return this.prismaService.productCategory.findUnique({
+      where: {
+        id,
+      },
+    });
+  }
+
+  findById(id: string) {
+    return this.prismaService.product.findUnique({
+      where: {
+        id,
+      },
+    });
+  }
 }

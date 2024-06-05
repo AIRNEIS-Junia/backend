@@ -23,7 +23,10 @@ async function bootstrap() {
 
     app.use(morgan('dev'));
   }
+  app.enableCors({
+    exposedHeaders: ['Content-Range'],
+  });
 
-  await app.listen(3000);
+  await app.listen(3001);
 }
 bootstrap();

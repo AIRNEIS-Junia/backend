@@ -10,8 +10,8 @@ import {
   UsePipes,
   ValidationPipe,
   UseGuards,
-  Query,
-} from '@nestjs/common';
+  Query, Res
+} from "@nestjs/common";
 import { ProductService } from '../../domain/services/product.service';
 import {
   ProductCategoryCreateDto,
@@ -22,6 +22,7 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import { RolesGuard } from '../../infrastructure/guards/roles.guard';
 import { Roles } from '../../infrastructure/decorators/roles.decorator';
+import { Response } from 'express';
 
 @Controller('products')
 @ApiTags('products')
@@ -35,10 +36,21 @@ export class ProductController {
     return this.productService.findByName(query.name);
   }
 
+  @Get(':id')
+  @UseGuards(AuthGuard('jwt-at'))
+  async findById(@Param('id') id: string) {
+    return this.productService.findById(id);
+  }
+
   @Get()
   @UseGuards(AuthGuard('jwt-at'))
-  async getAll() {
-    return this.productService.getAll();
+  async getAll(@Res() res: Response) {
+    const products = await this.productService.getAll();
+
+    const total = products.length;
+
+    res.set('Content-Range', `products 0-10/${total}`);
+    res.json(products);
   }
 
   @Post()
@@ -68,6 +80,12 @@ export class ProductController {
   @UseGuards(AuthGuard('jwt-at'))
   async getAllCategory() {
     return this.productService.getAllCategories();
+  }
+
+  @Get('categories/:id')
+  @UseGuards(AuthGuard('jwt-at'))
+  async getCategoryById(@Param('id') id: string) {
+    return this.productService.getCategoryById(id);
   }
 
   @Post('categories')

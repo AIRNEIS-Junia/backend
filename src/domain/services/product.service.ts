@@ -26,6 +26,10 @@ export class ProductService {
     return this.productRepository.delete(id);
   }
 
+  getCategoryById(id: string) {
+    return this.productRepository.getCategoryById(id);
+  }
+
   getAllCategories() {
     return this.productRepository.getAllCategories();
   }
@@ -56,5 +60,9 @@ export class ProductService {
 
   findByName(name: string) {
     return this.productRepository.findByName(name);
+  }
+
+  findById(id: string) {
+    return this.productRepository.findById(id);
   }
 }
