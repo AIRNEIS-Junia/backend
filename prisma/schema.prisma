@@ -39,7 +39,7 @@ model UserCreditCard {
   user           User     @relation(fields: [userId], references: [id])
   cardNumber     String   @db.VarChar(255)
   cardHolderName String   @db.VarChar(255)
-  expiryDate     DateTime @db.Date
+  expiryDate     String
   cvv            Int
   orders         Order[]
   createdAt      DateTime @default(now())
@@ -54,7 +54,7 @@ model UserAddress {
   firstName    String
   lastName     String
   phone        String
-  streetNumber String
+  streetNumber String?
   street       String
   additional   String?
   zipCode      String

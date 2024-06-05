@@ -33,7 +33,7 @@ export class UserRepository {
         ...data,
         firstName: data.firstName,
         lastName: data.lastName,
-        email: data.email,
+        email: data.email.toLowerCase(),
         password: hash,
         passwordSalt: salt,
       },

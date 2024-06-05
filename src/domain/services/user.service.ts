@@ -90,10 +90,8 @@ export class UserService {
   }
 
   async findAllCreditCardByUserId(userId: string) {
-    console.log('userId', userId);
-    const creditCard = await this.userRepository.findAllCreditCardByUserId(
-      userId,
-    );
+    const creditCard =
+      await this.userRepository.findAllCreditCardByUserId(userId);
 
     return {
       total: creditCard.length,
@@ -102,7 +100,6 @@ export class UserService {
   }
 
   async createCreditCard(data: UserCreditCardCreateDto, userId: string) {
-    console.log(userId);
     return this.userRepository.createCreditCard({
       ...data,
       userId,

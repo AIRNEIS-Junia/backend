@@ -23,7 +23,9 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
   async login(data: AuthLoginDto): Promise<AuthLoginResponse> {
-    const findEmail = await this.userRepository.findByEmail(data.email);
+    const findEmail = await this.userRepository.findByEmail(
+      data.email.toLowerCase(),
+    );
 
     if (!findEmail) throw new NotFoundException('EMAIL_OR_PASSWORD_WRONG');
 
@@ -34,7 +36,7 @@ export class AuthService {
     const payload = {
       firstName: findEmail.firstName,
       lastName: findEmail.lastName,
-      email: findEmail.email,
+      email: findEmail.email.toLowerCase(),
       sub: findEmail.id,
       roles: findEmail.role,
     };
@@ -66,7 +68,7 @@ export class AuthService {
     const payload = {
       firstName: create.firstName,
       lastName: create.lastName,
-      email: create.email,
+      email: create.email.toLowerCase(),
       sub: create.id,
       roles: create.role,
     };

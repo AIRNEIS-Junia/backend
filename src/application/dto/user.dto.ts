@@ -1,16 +1,17 @@
 import {
   IsDate,
   IsEmail,
-  IsNotEmpty, IsNumber,
+  IsNotEmpty,
+  IsNumber,
   IsOptional,
   IsString,
   IsUUID,
   MaxLength,
   MinLength,
-  ValidateIf
-} from "class-validator";
+  ValidateIf,
+} from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { Type } from "class-transformer";
+import { Type } from 'class-transformer';
 
 export class UserFindByIdDto {
   @ApiProperty({ required: true })
@@ -118,10 +119,9 @@ export class UserCreditCardCreateDto {
   cardHolderName: string;
 
   @ApiProperty({ required: true })
-  @IsDate()
-  @Type(() => Date)
+  @IsString()
   @IsNotEmpty()
-  expiryDate: Date;
+  expiryDate: string;
 
   @ApiProperty({ required: true })
   @IsNumber()

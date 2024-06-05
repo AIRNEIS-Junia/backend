@@ -11,7 +11,7 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { UserService } from '../../domain/services/user.service';
 import { JwtReqUser } from '../../infrastructure/types/jwt.type';
 import { AuthGuard } from '@nestjs/passport';
@@ -23,6 +23,10 @@ import {
   UserFindByIdDto,
   UserUpdateDto,
 } from '../dto/user.dto';
+import {
+  UserCreateCardResponse,
+  UserResponse,
+} from '../../infrastructure/types/user.type';
 
 @Controller('user')
 @ApiTags('user')
@@ -33,6 +37,7 @@ export class UserController {
   @Get()
   @UseGuards(AuthGuard('jwt-at'))
   @UsePipes(new ValidationPipe())
+  @ApiOkResponse({ type: UserResponse })
   async findMe(@Req() req: JwtReqUser) {
     return req.user;
   }
@@ -86,6 +91,7 @@ export class UserController {
   @Get('credit-card')
   @UseGuards(AuthGuard('jwt-at'))
   @UsePipes(new ValidationPipe())
+  @ApiOkResponse({ type: [UserCreateCardResponse] })
   async findAllCreditCard(@Req() req: JwtReqUser) {
     return this.userService.findAllCreditCardByUserId(req.user.id);
   }
@@ -93,6 +99,7 @@ export class UserController {
   @Post('credit-card')
   @UseGuards(AuthGuard('jwt-at'))
   @UsePipes(new ValidationPipe())
+  @ApiOkResponse({ type: UserCreateCardResponse })
   async createCreditCard(
     @Body() body: UserCreditCardCreateDto,
     @Req() req: JwtReqUser,
