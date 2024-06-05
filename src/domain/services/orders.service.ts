@@ -35,12 +35,7 @@ export class OrdersService {
       include: {
         orderItems: {
           include: {
-            product: {
-              select: {
-                name: true,
-                price: true,
-              },
-            },
+            product: true,
           },
         },
         address: true,
