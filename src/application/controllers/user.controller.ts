@@ -6,11 +6,12 @@ import {
   Param,
   Patch,
   Post,
-  Req, Res,
+  Req,
+  Res,
   UseGuards,
   UsePipes,
-  ValidationPipe
-} from "@nestjs/common";
+  ValidationPipe,
+} from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { UserService } from '../../domain/services/user.service';
 import { JwtReqUser } from '../../infrastructure/types/jwt.type';
@@ -21,7 +22,7 @@ import {
   UserFindByIdDto,
   UserUpdateDto,
 } from '../dto/user.dto';
-import { Response } from "express";
+import { Response } from 'express';
 
 @Controller('user')
 @ApiTags('user')
@@ -36,14 +37,14 @@ export class UserController {
     return req.user;
   }
 
-  @Get()
+  @Get('all')
   @UseGuards(AuthGuard('jwt-at'))
   async findAll(@Res() res: Response) {
     const users = await this.userService.findAllUsers(res);
     const total = users.length;
 
     res.set('Content-Range', `users 0-10/${total}`);
-    res.set('Access-Control-Expose-Headers', 'Content-Range');
+    res.set('Content-Range', `users 0-10/${total}`);
     res.json(users);
   }
 
