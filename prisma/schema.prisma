@@ -187,7 +187,7 @@ model Order {
 model OrderItem {
   id          String   @id @default(uuid()) @db.Char(36)
   quantity    Int
-  productSlug String   @db.Char(36)
+  productSlug String
   product     Product  @relation(fields: [productSlug], references: [slug])
   orderId     String   @db.Char(36)
   order       Order    @relation(fields: [orderId], references: [id])

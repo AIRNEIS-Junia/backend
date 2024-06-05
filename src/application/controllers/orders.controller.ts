@@ -47,13 +47,10 @@ export class OrdersController {
   @UseGuards(AuthGuard('jwt-at'))
   @UsePipes(new ValidationPipe())
   @ApiOperation({ summary: 'Get orders of the authenticated user' })
-  @ApiResponse({
-    status: 200,
-    description: 'Return the list of orders.',
-    type: [OrderDto],
-  })
   @ApiResponse({ status: 401, description: 'Unauthorized.' })
   async getUserOrders(@Req() req: JwtReqUser) {
-    return this.ordersService.getUserOrders(req.user.id);
+    const results = await this.ordersService.getUserOrders(req.user.id);
+    console.log(results);
+    return results;
   }
 }

@@ -29,11 +29,20 @@ export class OrdersService {
     });
   }
 
-  async getUserOrders(userId: string): Promise<Order[]> {
+  async getUserOrders(userId: string): Promise<any[]> {
     return this.prisma.order.findMany({
       where: { userId },
       include: {
-        orderItems: { include: { product: true } },
+        orderItems: {
+          include: {
+            product: {
+              select: {
+                name: true,
+                price: true,
+              },
+            },
+          },
+        },
         address: true,
         creditCard: true,
       },

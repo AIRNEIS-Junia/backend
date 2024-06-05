@@ -26,6 +26,12 @@ export class ProductCategoryResponse {
   image: string;
 
   @ApiProperty({
+    type: String,
+    description: 'Field',
+  })
+  slug: string;
+
+  @ApiProperty({
     type: Date,
     description: 'Field',
   })
@@ -130,6 +136,12 @@ export class ProductResponse {
     description: 'Field',
   })
   productTypes: ProductTypeResponse[];
+
+  @ApiProperty({
+    type: String,
+    description: 'Field',
+  })
+  slug: string;
 }
 
 export class ProductsPagination {

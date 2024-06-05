@@ -79,9 +79,9 @@ export class UserAddressCreateDto {
   @IsNotEmpty()
   street: string;
 
-  @ApiProperty({ required: true })
+  @ApiProperty({ required: false })
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   streetNumber: string;
 
   @ApiProperty({ required: false })

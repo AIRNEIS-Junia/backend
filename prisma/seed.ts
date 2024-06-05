@@ -1,5 +1,5 @@
 import { SEED_PRODUCT_CATEGORIES } from './seed/productCategories';
-import { PrismaClient, Product, ProductCategory } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import { SEED_PRODUCTS } from './seed/product';
 import chalk from 'chalk';
 

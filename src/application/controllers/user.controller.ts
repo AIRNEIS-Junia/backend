@@ -24,6 +24,7 @@ import {
   UserUpdateDto,
 } from '../dto/user.dto';
 import {
+  UserAddressResponse,
   UserCreateCardResponse,
   UserResponse,
 } from '../../infrastructure/types/user.type';
@@ -39,6 +40,7 @@ export class UserController {
   @UsePipes(new ValidationPipe())
   @ApiOkResponse({ type: UserResponse })
   async findMe(@Req() req: JwtReqUser) {
+    await this.userService.me(req.user.id);
     return req.user;
   }
 
@@ -52,6 +54,7 @@ export class UserController {
   @Get('address')
   @UseGuards(AuthGuard('jwt-at'))
   @UsePipes(new ValidationPipe())
+  @ApiOkResponse({ type: UserAddressResponse })
   async findAllAddress(@Req() req: JwtReqUser) {
     return this.userService.findAllAddressByUserId(req.user.id);
   }
@@ -59,11 +62,11 @@ export class UserController {
   @Post('address')
   @UseGuards(AuthGuard('jwt-at'))
   @UsePipes(new ValidationPipe())
+  @ApiOkResponse({ type: UserAddressResponse })
   async createAddress(
     @Body() body: UserAddressCreateDto,
     @Req() req: JwtReqUser,
   ) {
-    console.log(req.user);
     return this.userService.createAddress(body, req.user.id);
   }
 

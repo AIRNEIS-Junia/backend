@@ -19,6 +19,12 @@ import _ from 'lodash';
 export class UserService {
   constructor(private readonly userRepository: UserRepository) {}
 
+  async me(userId: string) {
+    const find = await this.userRepository.findById(userId);
+
+    if (!find) throw new ForbiddenException();
+  }
+
   async update(data: UserUpdateDto, userId: string) {
     if (data.currentPassword) {
       const findUser = await this.userRepository.findById(userId);
