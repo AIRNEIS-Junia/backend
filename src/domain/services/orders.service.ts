@@ -39,7 +39,6 @@ export class OrdersService {
           },
         },
         address: true,
-        creditCard: true,
       },
     });
   }
